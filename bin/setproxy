@@ -2,7 +2,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-074221
+SCRIPTVERSION=150620-091855
 
 if [ "x" == "x${SQUID}" ]; then
     echo "env SQUID not set, defaulting to 10.7.7.1:3128"
