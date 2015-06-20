@@ -1,0 +1,47 @@
+#!/bin/sh
+
+if [ "x" == "x${SQUID}" ]; then
+    echo "env SQUID not set, defaulting to 10.7.7.1:3128"
+    SQUID="10.7.7.1:3128"
+fi
+
+# Thanks to @tomster via https://github.com/freebsd/pkg/issues/1181
+install -d -m 755 /usr/local/etc
+cat >/usr/local/etc/pkg.conf <<EOF
+# Sample alias settings
+ALIAS              : {
+  all-depends: query %dn-%dv,
+  annotations: info -A,
+  build-depends: info -qd,
+  cinfo: info -Cx,
+  comment: query -i "%c",
+  csearch: search -Cx,
+  desc: query -i "%e",
+  download: fetch,
+  iinfo: info -ix,
+  isearch: search -ix,
+  prime-list: "query -e '%a = 0' '%n'",
+  leaf: "query -e '%#r == 0' '%n-%v'",
+  list: info -ql,
+  noauto = "query -e '%a == 0' '%n-%v'",
+  options: query -i "%n - %Ok: %Ov",
+  origin: info -qo,
+  provided-depends: info -qb,
+  raw: info -R,
+  required-depends: info -qr,
+  roptions: rquery -i "%n - %Ok: %Ov",
+  shared-depends: info -qB,
+  show: info -f -k,
+  size: info -sq,
+}
+PKG_ENV : {
+  HTTP_PROXY: "http://${SQUID}",
+  HTTPS_PROXY: "http://${SQUID}"
+}
+EOF
+chmod 644 /usr/local/etc/pkg.conf
+echo 'setenv HTTP_PROXY "http://${SQUID}"' >>/root/.cshrc
+echo 'HTTP_PROXY="http://${SQUID}"' >>/root/.profile
+echo 'export HTTP_PROXY' >>/root/.profile
+
+echo "You may have to log out/in, or source /root/.profile"
