@@ -1,4 +1,8 @@
 #!/bin/sh
+######################################################################
+# Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
+######################################################################
+SCRIPTVERSION=150620-073447
 
 cat /usr/local/etc/pkg.conf.sample >/usr/local/etc/pkg.conf
 
