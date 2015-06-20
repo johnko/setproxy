@@ -45,10 +45,10 @@ PKG_ENV : {
 EOF
 chmod 644 /usr/local/etc/pkg.conf
 
-echo "setenv HTTP_PROXY \"http://${SQUID}\"" >>/root/.cshproxy
+echo "setenv HTTP_PROXY \"http://${SQUID}\"" >>/root/perm/cshproxy
 
 echo >>/root/.profile
 echo "HTTP_PROXY=\"http://${SQUID}\"" >>/root/.profile
 echo "export HTTP_PROXY" >>/root/.profile
 
-echo "You may have to log out/in, or source /root/.profile"
+echo "You may have to log out/in, or source /root/perm/cshproxy"
