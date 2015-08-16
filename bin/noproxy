@@ -2,11 +2,11 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-094937
+SCRIPTVERSION=150816-035301
 
 cat /usr/local/etc/pkg.conf.sample >/usr/local/etc/pkg.conf
 
-for i in local/cshproxy .profile ; do
+for i in local/cshproxy ; do
     cat /root/${i} | grep -v 'HTTP_PROXY' >/root/${i}.tmp
     cat /root/${i}.tmp >/root/${i}
     rm  /root/${i}.tmp
