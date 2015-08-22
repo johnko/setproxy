@@ -2,7 +2,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150816-035301
+SCRIPTVERSION=150822-020729
 
 if [ "x" == "x${SQUID}" ]; then
     echo "env SQUID not set, defaulting to 10.7.7.1:3128"
@@ -45,6 +45,6 @@ PKG_ENV : {
 EOF
 chmod 644 /usr/local/etc/pkg.conf
 
-echo "setenv HTTP_PROXY \"http://${SQUID}\"" >>/root/local/cshproxy
+echo "setenv HTTP_PROXY \"http://${SQUID}\"" >/root/local/cshproxy
 
 echo "You may have to log out/in, or source /root/local/cshproxy"
