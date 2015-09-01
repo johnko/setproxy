@@ -2,7 +2,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150822-020729
+SCRIPTVERSION=150901-202916
 
 if [ "x" == "x${SQUID}" ]; then
     echo "env SQUID not set, defaulting to 10.7.7.1:3128"
@@ -42,6 +42,7 @@ PKG_ENV : {
   HTTP_PROXY: "http://${SQUID}",
   HTTPS_PROXY: "http://${SQUID}"
 }
+PKG_CACHEDIR = "/boot/packages_cache";
 EOF
 chmod 644 /usr/local/etc/pkg.conf
 

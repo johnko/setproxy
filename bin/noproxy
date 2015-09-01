@@ -2,9 +2,12 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150816-035301
+SCRIPTVERSION=150901-202916
 
 cat /usr/local/etc/pkg.conf.sample >/usr/local/etc/pkg.conf
+cat >>/usr/local/etc/pkg.conf <<EOF
+PKG_CACHEDIR = "/boot/packages_cache";
+EOF
 
 for i in local/cshproxy ; do
     cat /root/${i} | grep -v 'HTTP_PROXY' >/root/${i}.tmp
