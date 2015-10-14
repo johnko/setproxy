@@ -1,17 +1,14 @@
 #!/bin/sh
-######################################################################
-# Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
-######################################################################
-SCRIPTVERSION=150901-202916
 
 if [ "x" == "x${SQUID}" ]; then
     echo "env SQUID not set, defaulting to 10.7.7.1:3128"
     SQUID="10.7.7.1:3128"
 fi
 
-# Thanks to @tomster via https://github.com/freebsd/pkg/issues/1181
-install -d -m 755 /usr/local/etc
-cat >/usr/local/etc/pkg.conf <<EOF
+if [ "0" = "`id -u`" ]; then
+    # Thanks to @tomster via https://github.com/freebsd/pkg/issues/1181
+    install -d -m 755 /usr/local/etc
+    cat >/usr/local/etc/pkg.conf <<EOF
 # Sample alias settings
 ALIAS              : {
   all-depends: query %dn-%dv,
@@ -44,8 +41,24 @@ PKG_ENV : {
 }
 PKG_CACHEDIR = "/boot/packages_cache";
 EOF
-chmod 644 /usr/local/etc/pkg.conf
+    chmod 644 /usr/local/etc/pkg.conf
+fi
 
-echo "setenv HTTP_PROXY \"http://${SQUID}\"" >/root/local/cshproxy
 
-echo "You may have to log out/in, or source /root/local/cshproxy"
+if [ ! -d ~/local ]; then
+    # are you root?
+    if [ "0" = "`id -u`" ]; then
+        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
+        if [ "x" != "x${NEWDATASET}" ]; then
+            zfs create -o exec=off -o setuid=off ${NEWDATASET}
+        fi
+    fi
+    if [ ! -d ~/local ]; then
+        install -d -m 700 ~/local
+    fi
+fi
+
+
+echo "setenv HTTP_PROXY \"http://${SQUID}\"" >~/local/cshproxy
+
+echo "You may have to log out/in, or source ~/local/cshproxy"
