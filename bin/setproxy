@@ -39,7 +39,6 @@ PKG_ENV : {
   HTTP_PROXY: "http://${SQUID}",
   HTTPS_PROXY: "http://${SQUID}"
 }
-PKG_CACHEDIR = "/boot/packages_cache";
 EOF
     chmod 644 /usr/local/etc/pkg.conf
 fi
