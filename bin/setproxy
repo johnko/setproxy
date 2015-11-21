@@ -1,8 +1,19 @@
 #!/bin/sh
 
-if [ "x" == "x${SQUID}" ]; then
+if [ "x" = "x${SQUID}" ]; then
     echo "env SQUID not set, defaulting to 10.7.7.1:3128"
-    SQUID="10.7.7.1:3128"
+    . /usr/local/bin/loadmyvars.sh
+    if [ "x" = "x${SQUID}" ]; then
+        SQUID="10.7.7.1:3128"
+    fi
+fi
+
+# if not 10.7.7.1 and we have the IP configured, assume 10.7.7.1
+if [ "10.7.7.1:3128" != "${SQUID}" ]; then
+    JUSTIP=${SQUID%:*}
+    if ifconfig | grep $JUSTIP >/dev/null 2>&1 ; then
+        SQUID="10.7.7.1:3128"
+    fi
 fi
 
 if [ "0" = "`id -u`" ]; then
