@@ -1,13 +1,15 @@
 #!/bin/sh
 
-if [ "0" = "`id -u`" ]; then
-    cat /usr/local/etc/pkg.conf.sample >/usr/local/etc/pkg.conf
-    cat >>/usr/local/etc/pkg.conf <<EOF
-EOF
+# exit if running already
+THISSCRIPT=${0##*/}
+if pgrep -lf ${THISSCRIPT} > /dev/null 2> /dev/null ; then
+    exit 1
 fi
 
-for i in local/cshproxy ; do
-    cat ~/${i} | grep -v 'HTTP_PROXY' >~/${i}.tmp
-    cat ~/${i}.tmp >~/${i}
-    rm  ~/${i}.tmp
-done
+
+if [ "0" = "`id -u`" ]; then
+    cat /usr/local/etc/pkg.conf.sample >/usr/local/etc/pkg.conf
+fi
+
+rm ~/local/cshproxy
+rm ~/local/squid.conf
