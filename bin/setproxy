@@ -8,10 +8,12 @@ fi
 
 
 if [ "x" = "x${SQUID}" ]; then
-    echo "env SQUID not set, defaulting to 10.7.7.1:3128"
     . /usr/local/bin/loadmyvars.sh
     if [ "x" = "x${SQUID}" ]; then
+        echo "env SQUID not set, defaulting to 10.7.7.1:3128"
         SQUID="10.7.7.1:3128"
+    else
+        echo "got SQUID from local/squid.conf, ${SQUID}"
     fi
 fi
 
