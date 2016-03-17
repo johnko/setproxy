@@ -78,7 +78,9 @@ if [ ! -d ~/local ]; then
 fi
 
 echo "SQUID=${SQUID}" >~/local/squid.conf
+chmod 600 ~/local/squid.conf
 
 echo "setenv HTTP_PROXY \"http://${SQUID}\"" >~/local/cshproxy
+chmod 600 ~/local/cshproxy
 
 echo "You may have to log out/in, or source ~/local/cshproxy"
